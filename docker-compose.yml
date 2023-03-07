@@ -74,8 +74,8 @@ x-airflow-common:
     - dags:/opt/airflow/dags
     - logs:/opt/airflow/logs
     - plugins:/opt/airflow/plugins
-    - hop_config:/opt/hop_config
-    - hop_projetos:/opt/projetos/
+    - hop_config:/opt/config
+    - hop_projetos:/opt/projetos
 
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
