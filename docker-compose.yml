@@ -65,12 +65,18 @@ x-airflow-common:
     #_PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-airflow-hop-plugin-custom}
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-airflow-hop-plugin}
   volumes:
-    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
-    - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
-    - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
+    # - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+    # - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
+    # - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
   # volumes adicionais do projeto hop
-    - ./config:/opt/config
-    - ./projetos:/opt/projetos/
+    # - ./config:/opt/config
+    # - ./projetos:/opt/projetos/
+    - dags:/opt/airflow/dags
+    - logs:/opt/airflow/logs
+    - plugins:/opt/airflow/plugins
+    - hop_config:/opt/hop_config
+    - hop_projetos:/opt/projetos/
+
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -303,6 +309,16 @@ services:
 
 volumes:
   postgres-db-volume:
+  dags:
+    external: true
+  logs:
+    external: true
+  plugins:
+    external: true
+  hop_config:
+    external: true
+  hop_projetos:
+    external: true
 
 #adicionado a instrução de redes utilizadas nos serviços acima.
 #a rede externa foi criada previamente com o comando 'docker network create externa'
